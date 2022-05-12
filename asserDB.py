@@ -1,5 +1,5 @@
 '''
-asserDB v1.0 developed by Seok Ho Lee
+asserDB v1.1 developed by Seok Ho Lee
 (A.K.A. Mercen Lee)
 Github : https://github.com/Mercen-Lee
 Tistory : https://mercen.net/
@@ -43,9 +43,13 @@ def check(name,stk):
 
 def readDict(name=None,stk=2):return reader(check(name,stk))
 
-def writeDict(dictionary,name=None,stk=2):writer(dictionary,check(name,stk))
+def readKeys(name=None):return list(readDict(name,3).keys())
+
+def readVals(name=None):return list(readDict(name,3).values.keys())
 
 def read(key,name=None):return readDict(name,3)[key]
+
+def writeDict(dictionary,name=None,stk=2):writer(dictionary,check(name,stk))
 
 def write(key,value,name=None):
     dc=readDict(name,3);dc[key]=value;writeDict(dc,name,3)
