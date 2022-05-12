@@ -1,17 +1,11 @@
 '''
-asserDB v0.3 developed by Seok Ho Lee
+asserDB v1.0 developed by Seok Ho Lee
 (A.K.A. Mercen Lee)
 Github : https://github.com/Mercen-Lee
 Tistory : https://mercen.net/
 '''
 from os import path;from inspect import stack
 from subprocess import run;import base64
-
-def typer(variable):
-    try:
-        try: int(variable); return 'int'
-        except: float(variable); return 'float'
-    except: return 'str'
 
 def reader(filename):
     result={};temp=[];file=open(filename,'r');inside=file.read()
@@ -37,7 +31,7 @@ def writer(dictionary,filename):
         else:dcvals[i]='[\''+dcvals[i]+'\']'
         dc.append(dckeys[i]+dcvals[i])
     ec=base64.b64encode('\n'.join(dc).encode('utf-8')).decode('utf-8')
-    file=open(filename,'w');file.write('asserDB;'+ec);file.close() 
+    file=open(filename,'w');file.write('asserDB;'+ec);file.close()
 
 def check(name,stk):
     if not name:name=path.basename(stack()[stk].filename.replace('.py',''))
