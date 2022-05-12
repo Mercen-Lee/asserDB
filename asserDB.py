@@ -1,5 +1,5 @@
 '''
-asserDB v1.1 developed by Seok Ho Lee
+asserDB v1.3 developed by Seok Ho Lee
 (A.K.A. Mercen Lee)
 Github : https://github.com/Mercen-Lee
 Tistory : https://mercen.net/
@@ -31,7 +31,11 @@ def writer(dictionary,filename):
         else:dcvals[i]='[\''+dcvals[i]+'\']'
         dc.append(dckeys[i]+dcvals[i])
     ec=base64.b64encode('\n'.join(dc).encode('utf-8')).decode('utf-8')
-    file=open(filename,'r+');file.write('asserDB;'+ec);file.close()
+    try:
+        run(['attrib','-s','-h',filename],check=True)
+        file=open(filename,'w');file.write('asserDB;'+ec);file.close()
+        run(['attrib','+h',filename],check=True)
+    except:file=open(filename,'w');file.write('asserDB;'+ec);file.close()
 
 def check(name,stk):
     if not name:name=path.basename(stack()[stk].filename.replace('.py',''))
