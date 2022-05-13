@@ -7,6 +7,8 @@ Tistory : https://mercen.net/
 from os import path;from inspect import stack
 from subprocess import run;import base64; from platform import system
 
+systype=system()=='Windows'
+
 def reader(filename):
     result={};temp=[];file=open(filename,'r');inside=file.read()
     if inside.startswith('asserDB;'):inside=inside[8:]
@@ -31,7 +33,7 @@ def writer(dictionary,filename):
         else:dcvals[i]='[\''+dcvals[i]+'\']'
         dc.append(dckeys[i]+dcvals[i])
     ec=base64.b64encode('\n'.join(dc).encode('utf-8')).decode('utf-8')
-    if system()=='Windows':
+    if systype:
         run(['attrib','-s','-h',filename],shell=True)
         file=open(filename,'w');file.write('asserDB;'+ec);file.close()
         run(['attrib','+h',filename],shell=True)
@@ -41,7 +43,7 @@ def check(name,stk):
     if not name:name=path.basename(stack()[stk].filename.replace('.py',''))
     link='.asserDB$'+path.splitext(name)[0]
     if not path.isfile(link):open(link,'w+').close()
-    if system()=='Windows':run(['attrib','+h',link],shell=True)
+    if systype:run(['attrib','+h',link],shell=True)
     return link
 
 def readDict(name=None,stk=2):return reader(check(name,stk))
